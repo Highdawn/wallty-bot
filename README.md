@@ -22,7 +22,6 @@ Make a copy of the configuration example file
 
 The project will require the following packages:
  * python-firebase
- * firebase
  * telepot 
  
 In order to install all of the required packages you can run the following command in your command line
