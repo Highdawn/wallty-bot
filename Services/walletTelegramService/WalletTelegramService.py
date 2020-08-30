@@ -20,6 +20,7 @@ class WalletTelegramService(TelegramClient):
         self.send_message(chat_id, response['message'], response['markup'])
 
     def process_message(self, text, message_from):
+        text = text.lower()
         if self.previous_commands.get(message_from):
             user_previous_command = self.previous_commands[message_from]
         else:
@@ -118,7 +119,7 @@ class WalletTelegramService(TelegramClient):
                     "markup": None
                 }
 
-        return self.get_response(text.lower())
+        return self.get_response(text)
 
     def get_response(self, text):
         responses = {
