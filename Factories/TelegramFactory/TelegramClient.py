@@ -5,14 +5,17 @@ from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 class TelegramClient:
-
-    previous_command = None
+    previous_commands = {}
 
     def __init__(self):
-        self.previous_command = None
         config = configparser.ConfigParser()
         config.read('.configs')
         self.client = telepot.Bot(config["TELEGRAM"]["BotToken"])
+
+    def start_bot(self):
+        self.start_listening(self.message_handler)
+        while True:
+            pass
 
     def start_listening(self, handler):
         MessageLoop(self.client, handler).run_as_thread()
@@ -23,13 +26,14 @@ class TelegramClient:
     def delete_message(self, chat_id, message_id):
         self.client.deleteMessage((chat_id, message_id))
 
-        # if msg.get('data'): # Checks if is a inline response
-        #     command = msg['data'].split("_")
-        #     self.client.deleteMessage((msg['message']['chat']['id'], msg['message']['message_id']))
-        # elif msg.get('text'): # Checks if is a text response
-        #     command = msg['text'].split("_")
-        #     if command[0] != '/start':
-        #         self.client.deleteMessage((msg['chat']['id'], msg['message_id']))
-        # else:
-        #     print("Unable to obtain clear message")
-        # self.message = command
+    @staticmethod
+    def message_handler(msg):
+        print(msg)
+
+    @staticmethod
+    def create_button(text, callback_data):
+        return InlineKeyboardButton(text=text, callback_data=callback_data)
+
+    @staticmethod
+    def create_markup(buttons):
+        return InlineKeyboardMarkup(inline_keyboard=buttons)
