@@ -1,3 +1,2 @@
-python_firebase==1.2.1
-telepot==12.7
-firebase==3.0.1
+python_firebase
+telepot
